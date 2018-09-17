@@ -5,11 +5,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @see https://github.com/vova07/yii2-imperavi-widget
+ * @see https://github.com/josepharcillashn/yii2-imperavi-widget
  */
-
-namespace vova07\imperavi;
-
+namespace josepharcillashn\imperavi;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
@@ -18,7 +16,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\JsExpression;
-
 /**
  * Imperavi Redactor widget.
  *
@@ -28,59 +25,50 @@ use yii\web\JsExpression;
  *
  * @author Vasile Crudu <bazillio07@yandex.ru>
  *
- * @link https://github.com/vova07/yii2-imperavi-widget
+ * @link https://github.com/josepharcillashn/yii2-imperavi-widget
  * @link https://imperavi.com/assets/pdf/redactor-documentation-10.pdf
  *
- * @license https://github.com/vova07/yii2-imperavi-widget/blob/master/LICENSE.md
+ * @license https://github.com/josepharcillashn/yii2-imperavi-widget/blob/master/LICENSE.md
  */
 class Widget extends BaseWidget
 {
     /** Name of inline JavaScript package that is registered by the widget */
-    const INLINE_JS_KEY = 'vova07/imperavi/';
-
+    const INLINE_JS_KEY = 'josepharcillashn/imperavi/';
     /**
      * @var Model|null The data model that this widget is associated with.
      */
     public $model;
-
     /**
      * @var string|null The model attribute that this widget is associated with.
      */
     public $attribute;
-
     /**
      * @var string|null The input name. This must be set if `model` and `attribute` are not set.
      */
     public $name;
-
     /**
      * @var string|null The input value.
      */
     public $value;
-
     /**
      * @var string|null Selector pointing to textarea to initialize redactor for.
      * Defaults to `null` meaning that textarea does not exist yet and will be rendered by this widget.
      */
     public $selector;
-
     /**
      * @var array The HTML attribute options for the input tag.
      *
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
     public $options = [];
-
     /**
      * @var array {@link https://imperavi.com/assets/pdf/redactor-documentation-10.pdf redactor options} to manage the redactor itself.
      */
     public $settings = [];
-
     /**
      * @var array Default settings that will be merged with {@link $settings}. Useful with DI container.
      */
     public $defaultSettings = [];
-
     /**
      * This property must be used only for registering widget's custom plugins.
      * The `key` is the name of the plugin, and the `value` must be the class name of the plugin bundle.
@@ -90,12 +78,10 @@ class Widget extends BaseWidget
      * @example `['my-custom-plugin' => MyCustomPlugin::className(), ...]`
      */
     public $plugins = [];
-
     /**
      * @var boolean Whether to render the `textarea` or not.
      */
     private $_renderTextarea = true;
-
     /**
      * @inheritdoc
      */
@@ -121,26 +107,21 @@ class Widget extends BaseWidget
         } else {
             $this->_renderTextarea = false;
         }
-
         // @codeCoverageIgnoreStart
         $request = Yii::$app->getRequest();
-
         if ($request->enableCsrfValidation) {
             $this->settings['uploadImageFields'][$request->csrfParam] = $request->getCsrfToken();
             $this->settings['uploadFileFields'][$request->csrfParam] = $request->getCsrfToken();
         }
         // @codeCoverageIgnoreEnd
-
         parent::init();
     }
-
     /**
      * @inheritdoc
      */
     public function run()
     {
         $this->register();
-
         if ($this->_renderTextarea === true) {
             if ($this->hasModel()) {
                 return Html::activeTextarea($this->model, $this->attribute, $this->options);
@@ -148,27 +129,24 @@ class Widget extends BaseWidget
                 return Html::textarea($this->name, $this->value, $this->options);
             }
         }
-
         return '';
     }
-
     /**
      * Register widget translations.
      */
     public static function registerTranslations()
     {
-        if (!isset(Yii::$app->i18n->translations['vova07/imperavi']) && !isset(Yii::$app->i18n->translations['vova07/imperavi*'])) {
-            Yii::$app->i18n->translations['vova07/imperavi'] = [
+        if (!isset(Yii::$app->i18n->translations['josepharcillashn/imperavi']) && !isset(Yii::$app->i18n->translations['josepharcillashn/imperavi*'])) {
+            Yii::$app->i18n->translations['josepharcillashn/imperavi'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@vova07/imperavi/messages',
+                'basePath' => '@josepharcillashn/imperavi/messages',
                 'forceTranslation' => true,
                 'fileMap' => [
-                    'vova07/imperavi' => 'imperavi.php',
+                    'josepharcillashn/imperavi' => 'imperavi.php',
                 ],
             ];
         }
     }
-
     /**
      * @return boolean whether this widget is associated with a data model.
      */
@@ -176,7 +154,6 @@ class Widget extends BaseWidget
     {
         return $this->model instanceof Model && $this->attribute !== null;
     }
-
     /**
      * Register all widget logic.
      */
@@ -186,24 +163,20 @@ class Widget extends BaseWidget
         $this->registerDefaultCallbacks();
         $this->registerClientScripts();
     }
-
     /**
      * Register default callbacks.
      */
     protected function registerDefaultCallbacks()
     {
         if (isset($this->settings['imageUpload']) && !isset($this->settings['imageUploadErrorCallback'])) {
-            $message = Yii::t('vova07/imperavi', 'ERROR_DURING_UPLOAD_PROCESS');
-
+            $message = Yii::t('josepharcillashn/imperavi', 'ERROR_DURING_UPLOAD_PROCESS');
             $this->settings['imageUploadErrorCallback'] = new JsExpression('function (response) { alert("' . $message . '"); }');
         }
         if (isset($this->settings['fileUpload']) && !isset($this->settings['fileUploadErrorCallback'])) {
-            $message = Yii::t('vova07/imperavi', 'ERROR_DURING_UPLOAD_PROCESS');
-
+            $message = Yii::t('josepharcillashn/imperavi', 'ERROR_DURING_UPLOAD_PROCESS');
             $this->settings['fileUploadErrorCallback'] = new JsExpression('function (response) { alert("' . $message . '"); }');
         }
     }
-
     /**
      * Register widget asset.
      */
@@ -213,7 +186,6 @@ class Widget extends BaseWidget
         /** @var Asset $asset */
         $asset = Yii::$container->get(Asset::className());
         $asset = $asset::register($view);
-
         if (isset($this->settings['lang'])) {
             $asset->addLanguage($this->settings['lang']);
         }
@@ -227,10 +199,8 @@ class Widget extends BaseWidget
                 $bundle::register($view);
             }
         }
-
         $selector = Json::encode($this->selector);
         $settings = !empty($this->settings) ? Json::encode($this->settings) : '';
-
         $view->registerJs("jQuery($selector).redactor($settings);", $view::POS_READY, self::INLINE_JS_KEY . $this->options['id']);
     }
 }
