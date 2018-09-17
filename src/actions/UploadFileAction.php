@@ -5,12 +5,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @see https://github.com/vova07/yii2-imperavi-widget
+ * @see https://github.com/josepharcillashn/yii2-imperavi-widget
  */
 
-namespace vova07\imperavi\actions;
+namespace josepharcillashn\imperavi\actions;
 
-use vova07\imperavi\Widget;
+use josepharcillashn\imperavi\Widget;
 use Yii;
 use yii\base\Action;
 use yii\base\DynamicModel;
@@ -32,7 +32,7 @@ use yii\web\UploadedFile;
  * {
  *     return [
  *         'upload-image' => [
- *             'class' => 'vova07\imperavi\actions\UploadFileAction',
+ *             'class' => 'josepharcillashn\imperavi\actions\UploadFileAction',
  *             'url' => 'http://my-site.com/statics/',
  *             'path' => '/var/www/my-site.com/web/statics',
  *             'unique' => true,
@@ -42,7 +42,7 @@ use yii\web\UploadedFile;
  *             ]
  *         ],
  *         'file-upload' => [
- *             'class' => 'vova07\imperavi\actions\UploadFileAction',
+ *             'class' => 'josepharcillashn\imperavi\actions\UploadFileAction',
  *             'url' => 'http://my-site.com/statics/',
  *             'path' => '/var/www/my-site.com/web/statics',
  *             'uploadOnlyImage' => false,
@@ -57,7 +57,7 @@ use yii\web\UploadedFile;
  *
  * @author Vasile Crudu <bazillio07@yandex.ru>
  *
- * @link https://github.com/vova07/yii2-imperavi-widget
+ * @link https://github.com/josepharcillashn/yii2-imperavi-widget
  */
 class UploadFileAction extends Action
 {
@@ -159,7 +159,7 @@ class UploadFileAction extends Action
 
                 if (file_exists($this->path . $model->file->name) && $this->replace === false) {
                     return [
-                        'error' => Yii::t('vova07/imperavi', 'ERROR_FILE_ALREADY_EXIST'),
+                        'error' => Yii::t('josepharcillashn/imperavi', 'ERROR_FILE_ALREADY_EXIST'),
                     ];
                 }
 
@@ -171,7 +171,7 @@ class UploadFileAction extends Action
                     }
                 } else {
                     $result = [
-                        'error' => Yii::t('vova07/imperavi', 'ERROR_CAN_NOT_UPLOAD_FILE'),
+                        'error' => Yii::t('josepharcillashn/imperavi', 'ERROR_CAN_NOT_UPLOAD_FILE'),
                     ];
                 }
             }
