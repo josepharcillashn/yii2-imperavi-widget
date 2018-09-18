@@ -90,6 +90,11 @@ class UploadFileAction extends Action
      * @var boolean If `true` unique filename will be generated automatically.
      */
     public $unique = true;
+    
+    /**
+    * @var integer max file size in bytes
+    */
+    public $maxFileSize;
 
     /**
      * In case of `true` this option will be ignored if `$unique` will be also enabled.
@@ -162,6 +167,13 @@ class UploadFileAction extends Action
                         'error' => Yii::t('josepharcillashn/imperavi', 'ERROR_FILE_ALREADY_EXIST'),
                     ];
                 }
+                
+                if($model->file->size > $this->maxFileSize){
+                    return [
+                        'error' => Yii::t('josepharcillashn/imperavi', 'ERROR_FILE_TOO_LARGE'),
+                    ];
+                }
+
 
                 if ($model->file->saveAs($this->path . $model->file->name)) {
                     $result = ['id' => $model->file->name, 'filelink' => $this->url . $model->file->name];
