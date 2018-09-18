@@ -23,5 +23,5 @@ return [
     'ERROR_FILE_IDENTIFIER_MUST_BE_PROVIDED' => 'File identifier must be provided.',
     'ERROR_FILE_DOES_NOT_EXIST' => 'Specified file does not exist.',
     'ERROR_CANNOT_REMOVE_FILE' => 'Cannot remove the file, something goes wrong.',
-    'ERROR_FILE_TOO_LARGE' => 'File is too large.'
+    'ERROR_FILE_TOO_LARGE' => 'File is too large. Max file size is '
 ];
