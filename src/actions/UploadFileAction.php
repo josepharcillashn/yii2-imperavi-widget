@@ -176,7 +176,7 @@ class UploadFileAction extends Action
                 
                 if($model->file->size > $this->maxFileSize){
                     return [
-                        'error' => Yii::t('josepharcillashn/imperavi', 'ERROR_FILE_TOO_LARGE').human_filesize($this->maxFileSize,2),
+                        'error' => Yii::t('josepharcillashn/imperavi', 'ERROR_FILE_TOO_LARGE').$this->human_filesize($this->maxFileSize,2),
                     ];
                 }
 
