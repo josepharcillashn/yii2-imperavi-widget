@@ -170,12 +170,13 @@ class Widget extends BaseWidget
     {
         if (isset($this->settings['imageUpload']) && !isset($this->settings['imageUploadErrorCallback'])) {
             $message = Yii::t('josepharcillashn/imperavi', 'ERROR_DURING_UPLOAD_PROCESS');
-            $this->settings['imageUploadErrorCallback'] = new JsExpression('function (response) { alert("' . $message . '"); }');
+            $this->settings['imageUploadErrorCallback'] = new JsExpression('function (response) { var message = response.error ? response.error: "'.$message.'";  alert(message); }');
         }
         if (isset($this->settings['fileUpload']) && !isset($this->settings['fileUploadErrorCallback'])) {
             $message = Yii::t('josepharcillashn/imperavi', 'ERROR_DURING_UPLOAD_PROCESS');
-            $this->settings['fileUploadErrorCallback'] = new JsExpression('function (response) { alert("' . $message . '"); }');
+            $this->settings['fileUploadErrorCallback'] = new JsExpression('function (response) { var message = response.error ? response.error: "'.$message.'";  alert(message); }');
         }
+
     }
     /**
      * Register widget asset.
